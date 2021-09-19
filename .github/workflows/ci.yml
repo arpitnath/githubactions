@@ -48,9 +48,13 @@ jobs:
     - name: Lint
       run: npm --prefix server run lint && npm --prefix frontend run lint
 
-  set-env:
+  test:
 
     runs-on: ubuntu-latest
+    env:
+        COMPOSE_FILE: ./docker-compose.yaml
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
     needs: build
 
     steps:
@@ -86,46 +90,23 @@ jobs:
           envkey_ORM_LOGGING: error
           file_name: .env.test
         
-      - name: Upload env files 
-        uses: actions/upload-artifact@v2
-        with:
-          name: env-files 
-          path: .
+      - name: Login to DockerHub
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
+      - name: Build docker images
+        run: docker-compose build
 
-  test: 
+      - name: Create testDb 
+        run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
 
-      runs-on: ubuntu-latest
-      needs: set-env
-      env:
-        COMPOSE_FILE: ./docker-compose.yaml
-        DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+      - name: Run Migrations
+        run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
+        
+      - name: Run e2e tests
+        run: docker-compose run --rm server npm run test:e2e
 
-      steps:
-        - name: download env files from setEnv
-          uses: actions/download-artifact@v2
-          with:
-            name: env-files 
-            path: .
-
-        - name: Login to DockerHub
-          run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-
-        - name: Build docker images
-          run: docker-compose build
-
-        - name: Create testDb 
-          run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
-
-        - name: Run Migrations
-          run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
-
-
-        - name: Run e2e tests
-          run: docker-compose run --rm server npm run test:e2e
-        - name: Run unit tests
-          run: docker-compose run --rm server npm run test
+      - name: Run unit tests
+        run: docker-compose run --rm server npm run test
 
         
 
