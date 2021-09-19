@@ -47,6 +47,7 @@ jobs:
       run: echo "Node version is ${{steps.package-engines-versions.outputs.nodeVersion}} & NPM version is ${{steps.package-engines-versions.outputs.npmVersion}}"
     
     - run: npm ci
+    - run: npm --prefix frontend install && npm --prefix server install
     - name: Lint
       run: npm --prefix server run lint && npm --prefix frontend run lint
 
