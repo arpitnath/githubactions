@@ -6,6 +6,7 @@ export const Button = function Button({ id, width, height, component, onComponen
   console.log('currentState', currentState)
 
   const x = [{a]
+    
 
   const [loadingState, setLoadingState] = useState(false);
 
