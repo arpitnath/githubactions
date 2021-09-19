@@ -45,6 +45,6 @@ jobs:
     
     - run: npm ci
     - name: Lint
-      run: npm --prefix server run lint && npm --prefix frontend run lint
+      run: npm run lint
 
 
