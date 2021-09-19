@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/client.Dockerfile.dev
+    image: tooljet-client:development
+    volumes:
+      - ./frontend:/app:delegated
+      - /app/node_modules/
+    ports:
+      - 8082:8082
+    environment:
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+      - NODE_ENV=development
+    command: ['npm', 'start']
+
+  server:
+    build:
+      context: .
+      dockerfile: ./docker/server.Dockerfile.dev
+    image: tooljet-server:development
+    depends_on:
+      - postgres
+    volumes:
+      - ./server:/app:delegated
+      - /app/node_modules/
+    ports:
+      - 3000:3000
+    environment:
+      - SERVE_CLIENT=false
+      - FORCE_COLOR=1
+    command: npm run start:dev
+
+  postgres:
+    image: postgres:13
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/data/postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  postgres:
+  node_modules:
+  cache:

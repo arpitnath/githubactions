@@ -1,0 +1,11 @@
+[build]
+  base = "frontend/"
+  publish = "build/"
+
+[template.environment]
+  NODE_ENV = "production"  
+
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200
