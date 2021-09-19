@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { resolveReferences, resolveWidgetFieldValue } from '@/_helpers/utils';
 var tinycolor = require('tinycolor2');
-
+//test
 export const Button = function Button({ id, width, height, component, onComponentClick, currentState }) {
   console.log('currentState', currentState);
 
