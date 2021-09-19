@@ -23,7 +23,8 @@ jobs:
     - name: Show node and npm version numbers
       run: echo "Node version is ${{steps.package-engines-versions.outputs.nodeVersion}} & NPM version is ${{steps.package-engines-versions.outputs.npmVersion}}"
     
-    - run: npm i
+    - run: npm cache clean --force
+    - run: npm ci
     - run: npm run build
 
 
