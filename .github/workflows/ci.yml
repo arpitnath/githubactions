@@ -90,9 +90,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: env-files 
-          path: |
-            .env
-            .env.test
+          path: .
 
      
   unitTest: 
@@ -109,9 +107,8 @@ jobs:
         - name: download env files from setEnv
           uses: actions/download-artifact@v2
           with:
-            name: |
-              .env
-              .env.test
+            name: env-files 
+            path: .
 
         - name: Login to DockerHub
           run: docker login -u $DOCKER_USER -p $DOCKER_PASS
@@ -142,9 +139,8 @@ jobs:
         - name: download env files from setEnv
           uses: actions/download-artifact@v2
           with:
-            name: |
-              .env
-              .env.test
+            name: env-files 
+            path: .
 
         - name: Login to DockerHub
           run: docker login -u $DOCKER_USER -p $DOCKER_PASS
