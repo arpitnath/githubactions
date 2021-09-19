@@ -26,9 +26,6 @@ jobs:
     - run: npm ci
     - run: npm run build
 
-    - name: Lint
-      run: npm --prefix server run lint && npm --prefix frontend run lint
-
 
   lint:
 
@@ -108,6 +105,9 @@ jobs:
 
       - name: Run unit tests
         run: docker-compose run --rm server npm run test 
+
+      - name: Run e2e tests
+        run: docker-compose run --rm server npm run test:e2e 
 
 
 
