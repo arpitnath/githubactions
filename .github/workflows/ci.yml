@@ -84,7 +84,7 @@ jobs:
         - uses: actions/upload-artifact@v2
           with:
             name: env-files
-            path: path/to/my/artifact.tar.gz
+            path: .env
         - uses: actions/upload-artifact@v2
           with:
             name: env-files
