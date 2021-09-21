@@ -48,7 +48,7 @@ jobs:
 
 
 
-  test: 
+  unit-test: 
 
       runs-on: ubuntu-latest
       env:
@@ -83,6 +83,42 @@ jobs:
         - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
         - run: docker-compose run --rm server npm run test 
+
+  e2e-test: 
+
+      runs-on: ubuntu-latest
+      env:
+        COMPOSE_FILE: ./docker-compose.yaml
+
+      steps:
+        - uses: actions/checkout@v2
+        - name: generate dotenv 
+          run: |
+                echo TOOLJET_HOST: http://localhost:8082 >> .env
+                echo LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40 >> .env
+                echo SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb >> .env
+                echo NODE_ENV: dev >> .env
+                echo PG_HOST: postgres >> .env
+                echo PG_PORT: 5432 >> .env
+                echo PG_USER: postgres >> .env
+                echo PG_PASS: postgres >> .env
+                echo PG_DB: tooljet_test >> .env
+                echo ORM_LOGGING: error >> .env
+
+                echo TOOLJET_HOST: http://localhost:8082 >> .env.test
+                echo LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40 >> .env.test
+                echo SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb >> .env.test
+                echo NODE_ENV: test >> .env.test
+                echo PG_HOST: postgres >> .env.test
+                echo PG_PORT: 5432 >> .env.test
+                echo PG_USER: postgres >> .env.test
+                echo PG_PASS: postgres >> .env.test
+                echo PG_DB: tooljet_test >> .env.test
+                echo ORM_LOGGING: error >> .env.test
+
+        - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
+        - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
+        - run: docker-compose run --rm server npm run test:e2e 
 
 
 
