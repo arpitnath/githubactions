@@ -124,13 +124,13 @@ jobs:
 
       steps:
         - uses: actions/checkout@v2
-        - name: Retrieve built package
-          uses: actions/download-artifact@v2
-          with:
-            name: artifact
-            path: |
-                .env
-                .env.test
+        # - name: Retrieve built package
+        #   uses: actions/download-artifact@v2
+        #   with:
+        #     name: artifact
+        #     path: |
+        #         .env
+        #         .env.test
 
         - name: Run unit tests
           run: docker-compose run --rm server npm run test 
