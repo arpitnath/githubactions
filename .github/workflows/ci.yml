@@ -46,11 +46,7 @@ jobs:
   create-env:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v2
-          with:
-            clean: false
-        - name: Generate .env 
-          uses: SpicyPizza/create-envfile@v1
+        - uses: SpicyPizza/create-envfile@v1
           with:
             envkey_TOOLJET_HOST: http://localhost:8082
             envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
@@ -64,8 +60,7 @@ jobs:
             envkey_ORM_LOGGING: error
             file_name: .env
 
-        - name: Generate .env.test
-          uses: SpicyPizza/create-envfile@v1
+        - uses: SpicyPizza/create-envfile@v1
           with:
             envkey_TOOLJET_HOST: http://localhost:8082
             envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
