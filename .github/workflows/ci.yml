@@ -92,7 +92,7 @@ jobs:
         COMPOSE_FILE: ./docker-compose.yaml
 
       steps:
-
+        - uses: actions/checkout@v2
         - name: Download env files
           uses: actions/download-artifact@v2
           with:
