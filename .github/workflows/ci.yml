@@ -53,8 +53,6 @@ jobs:
             with: 
               clean: 'false'
 
-          - uses: actions/checkout@v2
-
           - name: Make .env
             uses: SpicyPizza/create-envfile@v1
             with:
