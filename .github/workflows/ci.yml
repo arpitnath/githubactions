@@ -54,7 +54,7 @@ jobs:
           - uses: actions/upload-artifact@v2
             with:
               name: artifact
-              path: .
+              path: env
               retention-days: 1
           - name: Make .env
             uses: SpicyPizza/create-envfile@v1
@@ -100,7 +100,7 @@ jobs:
           uses: actions/download-artifact@v2
           with:
             name: artifact
-            path: .
+            path: env
 
         - name: Run unit tests
           run: docker-compose run --rm server npm run test 
