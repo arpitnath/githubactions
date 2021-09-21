@@ -170,7 +170,7 @@ jobs:
           echo ORM_LOGGING: error >> .env
           cat .env
 
-      - run:  docker-compose run -e NODE_ENV=test server npm run db:create
+      - run:  docker-compose -f docker-compose.yaml run -e NODE_ENV=test server npm run db:create
 
 
 
