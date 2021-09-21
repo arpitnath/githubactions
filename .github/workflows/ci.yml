@@ -80,7 +80,6 @@ jobs:
                 echo PG_DB: tooljet_test >> .env.test
                 echo ORM_LOGGING: error >> .env.test
 
-        - name: Run unit tests
         - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
         - run: docker-compose run --rm server npm run test 
