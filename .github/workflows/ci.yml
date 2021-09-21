@@ -84,11 +84,11 @@ jobs:
         - uses: actions/upload-artifact@v2
           with:
             name: env-files
-            path: .env
-        - uses: actions/upload-artifact@v2
-          with:
-            name: env-files
-            path: .env.test
+            path: path/to/my/artifact.tar.gz
+        # - uses: actions/upload-artifact@v2
+        #   with:
+        #     name: env-files
+        #     path: .env.test
 
 
 
@@ -105,12 +105,12 @@ jobs:
           uses: actions/download-artifact@v2
           with:
             name: env-files
-            path: .env
-        - name: Download artifact
-          uses: actions/download-artifact@v2
-          with:
-            name: env-files
-            path: .env.test
+            path: ./
+        # - name: Download artifact
+        #   uses: actions/download-artifact@v2
+        #   with:
+        #     name: env-files
+        #     path: .env.test
 
         # - run: docker-compose up -d
 
@@ -133,6 +133,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
+          name: env-files
           path: ./
       # - name: Download artifact
       #   uses: actions/download-artifact@v2
