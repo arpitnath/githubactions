@@ -13,6 +13,8 @@ jobs:
 
   #   steps:
   #   - uses: actions/checkout@v2
+  #     with:
+  #       clean: false
   #   - name: Read node and npm versions from package.json
   #     uses: skjnldsv/read-package-engines-version-actions@v1
   #     with:
@@ -108,6 +110,8 @@ jobs:
             name: env-files
             path: .env.test
 
+        - run: npm ci
+
         - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
         - run: docker-compose run --rm server npm run test 
@@ -127,6 +131,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: .env.test
+
+      - run: npm ci
       - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
       - run: docker-compose run --rm server npm run test:e2e 
