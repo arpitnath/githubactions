@@ -112,11 +112,15 @@ jobs:
             name: env-files
             path: .env.test
 
-        - run: docker-compose up -d
+        # - run: docker-compose up -d
 
         # - run:  docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
-        - run: docker-compose run --rm server npm run test 
+        # - run: docker-compose run --rm server npm run test 
+        - uses: harmon758/postgresql-action@v1
+          with:
+            postgresql version: '11'
+        - run: npm run cy:run
 
   # e2e-test: 
 
