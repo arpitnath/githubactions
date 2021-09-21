@@ -122,8 +122,7 @@ jobs:
             postgresql version: '13'
         - name: Run Jest
           uses: stefanoeb/jest-action@1.0.3
-        - run: npm --prefix server i && npm --prefix run test
-        - run: npm run cy:run
+        - run: npm --prefix run test
 
   # e2e-test: 
 
