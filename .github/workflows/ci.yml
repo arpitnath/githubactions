@@ -78,9 +78,7 @@ jobs:
         - uses: actions/upload-artifact@v2
           with:
             name: env-files
-            path: |
-                ./.env
-                ./.env.test
+            path: .env
 
 
 
@@ -98,9 +96,7 @@ jobs:
           uses: actions/download-artifact@v2
           with:
             name: env-files
-            path: |
-                ./.env
-                ./.env.test
+            path: .env
 
         - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
@@ -116,9 +112,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          path: |
-                ./.env
-                ./.env.test
+          path: .env
       - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
       - run: docker-compose run --rm server npm run test:e2e 
