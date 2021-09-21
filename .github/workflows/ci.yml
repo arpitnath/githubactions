@@ -143,9 +143,9 @@ jobs:
         with:
           postgresql version: '13'
       - run: npm --prefix server ci
-      - run: npm --prefix server run -e NODE_ENV=test ts-node ./scripts/create-database.ts
+      - run: npm run --prefix server db:reset
       # - run: npm --prefix server run -e NODE_ENV=test ts-node ./scripts/create-database.ts
-      - run: npm --prefix server run test:e2e
+      - run: npm run --prefix server test:e2e
 
 
 
