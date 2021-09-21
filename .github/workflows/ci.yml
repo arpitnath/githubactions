@@ -45,6 +45,8 @@ jobs:
   #     run: npm --prefix server run lint && npm --prefix frontend run lint
   create-env:
       runs-on: ubuntu-latest
+      env:
+        COMPOSE_FILE: ./docker-compose.yaml
       steps:
         - uses: SpicyPizza/create-envfile@v1
           with:
