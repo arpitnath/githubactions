@@ -46,9 +46,6 @@ jobs:
   create-env:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v2
-          with:
-            clean: false
         - uses: SpicyPizza/create-envfile@v1
           with:
             envkey_TOOLJET_HOST: http://localhost:8082
