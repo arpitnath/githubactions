@@ -120,7 +120,7 @@ jobs:
         - uses: harmon758/postgresql-action@v1
           with:
             postgresql version: '11'
-        - run: npm --prefix server ci && npm --prefix run test
+        - run: npm --prefix server i && npm --prefix run test
         - run: npm run cy:run
 
   # e2e-test: 
