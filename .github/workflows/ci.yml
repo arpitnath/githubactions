@@ -120,7 +120,6 @@ jobs:
         - uses: harmon758/postgresql-action@v1
           with:
             postgresql version: '13'
-        - uses: stefanoeb/jest-action@1.0.3
         - run: npm --prefix server install
         - run: npm --prefix server run test
 
