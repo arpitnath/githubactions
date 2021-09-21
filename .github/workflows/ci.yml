@@ -47,6 +47,9 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
+        - uses: actions/checkout@v2
+          with:
+            clean: false
         - uses: SpicyPizza/create-envfile@v1
           with:
             envkey_TOOLJET_HOST: http://localhost:8082
@@ -78,7 +81,9 @@ jobs:
         - uses: actions/upload-artifact@v2
           with:
             name: env-files
-            path: .env
+            path: |
+                ./.env
+                ./.env.test
 
 
 
@@ -90,13 +95,17 @@ jobs:
 
 
       steps:
-
+        - uses: actions/checkout@v2
+          with:
+            clean: false
         - uses: actions/checkout@v2
         - name: Download artifact
           uses: actions/download-artifact@v2
           with:
             name: env-files
-            path: .env
+            path: |
+                ./.env
+                ./.env.test
 
         - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
@@ -106,13 +115,18 @@ jobs:
 
       runs-on: ubuntu-latest
       needs: create-env
-
+      
       steps:
       - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+            clean: false
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          path: .env
+          path: |
+                ./.env
+                ./.env.test
       - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
       - run: docker-compose run --rm server npm run test:e2e 
