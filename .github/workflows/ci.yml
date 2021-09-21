@@ -145,10 +145,11 @@ jobs:
       #   with:
       #     postgresql version: '13'
       - run: npm ci
-      - run: npm --prefix server ci
-      - run: npm run --prefix server db:create
-      - run: npm run --prefix server db:migrate
-      - run: npm run --prefix server test:e2e
+      - run:  docker-compose run --rm -e NODE_ENV=test server npm run db:create
+      # - run: npm --prefix server ci
+      # - run: npm run --prefix server db:create
+      # - run: npm run --prefix server db:migrate
+      # - run: npm run --prefix server test:e2e
 
 
 
