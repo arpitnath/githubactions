@@ -230,6 +230,7 @@ jobs:
           with:
             postgresql version: '13'
         - run: npm --prefix server ci
+        - run: npm run --prefix server db:reset
         - run: npm --prefix server run start
         - run: npm --prefix server run test
 
