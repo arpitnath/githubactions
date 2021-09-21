@@ -84,22 +84,22 @@ jobs:
               file_name: .env.test
 
 
-  test: 
+  # test: 
 
-      runs-on: ubuntu-latest
-      needs: create-env-files
-      env:
-        COMPOSE_FILE: ./docker-compose.yaml
+  #     runs-on: ubuntu-latest
+  #     needs: create-env-files
+  #     env:
+  #       COMPOSE_FILE: ./docker-compose.yaml
 
-      steps:
-        - uses: actions/checkout@v2
-        - name: Download env files
-          uses: actions/download-artifact@v2
-          with:
-            name: env file
+  #     steps:
+  #       - uses: actions/checkout@v2
+  #       - name: Download env files
+  #         uses: actions/download-artifact@v2
+  #         with:
+  #           name: env file
 
-        - name: Run unit tests
-          run: docker-compose run --rm server npm run test 
+  #       - name: Run unit tests
+  #         run: docker-compose run --rm server npm run test 
 
 
 
