@@ -150,7 +150,7 @@ jobs:
           echo NODE_ENV: test >> .env.test
           echo PG_HOST: postgres >> .env.test
           echo PG_PORT: 5432 >> .env.test
-          echo PG_USER: postgres >> .env.test
+          echo PG_USER: pguser >> .env.test
           echo PG_PASS: postgres >> .env.test
           echo PG_DB: tooljet_test >> .env.test
           echo ORM_LOGGING: error >> .env.test
@@ -164,7 +164,7 @@ jobs:
           echo NODE_ENV: dev >> .env
           echo PG_HOST: postgres >> .env
           echo PG_PORT: 5432 >> .env
-          echo PG_USER: postgres >> .env
+          echo PG_USER: pguser >> .env
           echo PG_PASS: postgres >> .env
           echo PG_DB: tooljet_test >> .env
           echo ORM_LOGGING: error >> .env
