@@ -119,7 +119,8 @@ jobs:
         # - run: docker-compose run --rm server npm run test 
         - uses: harmon758/postgresql-action@v1
           with:
-            postgresql version: '11'
+            postgresql version: '13'
+        - run: npm ci
         - run: npm --prefix server i && npm --prefix run test
         - run: npm run cy:run
 
