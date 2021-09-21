@@ -133,11 +133,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          path: .env
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          path: .env.test
+          path: ./
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     path: .env.test
 
       - uses: harmon758/postgresql-action@v1
         with:
