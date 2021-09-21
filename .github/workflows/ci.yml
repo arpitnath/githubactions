@@ -121,7 +121,7 @@ jobs:
           with:
             postgresql version: '13'
         - uses: stefanoeb/jest-action@1.0.3
-          run: npm --prefix seerver run test
+        - run: npm --prefix server run test
 
   # e2e-test: 
 
