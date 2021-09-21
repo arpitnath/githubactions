@@ -120,8 +120,7 @@ jobs:
         - uses: harmon758/postgresql-action@v1
           with:
             postgresql version: '13'
-        - name: Run Jest
-          uses: stefanoeb/jest-action@1.0.3
+        - uses: stefanoeb/jest-action@1.0.3
           run: npm --prefix seerver run test
 
   # e2e-test: 
