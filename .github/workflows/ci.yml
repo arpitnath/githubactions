@@ -120,6 +120,7 @@ jobs:
         - uses: harmon758/postgresql-action@v1
           with:
             postgresql version: '11'
+        - run: npm ci
         - run: npm run cy:run
 
   # e2e-test: 
