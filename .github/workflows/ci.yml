@@ -139,6 +139,8 @@ jobs:
       needs: setup
       steps:
         - uses: actions/checkout@v2
+          with:
+            clean: false
         # - name: Download artifact
         #   uses: actions/download-artifact@v2
         #   with:
