@@ -233,7 +233,7 @@ jobs:
         # - run: npm run --prefix server db:reset
         # - run: npm --prefix server run start
         # - run: npm --prefix server run test
-        - run: docker compose build
+        - run: docker-compose build
         - run: docker-compose run --rm server npm run test
 
   e2e-test: 
@@ -278,7 +278,7 @@ jobs:
       #       postgresql version: '13'
       # - run: npm --prefix server ci
       # - run: npm --prefix server run test:e2e
-      - run: docker compose build
+      - run: docker-compose build
       - run: docker-compose run --rm server npm run test:e2e
       # - name: Download artifact
       #   uses: actions/download-artifact@v2
