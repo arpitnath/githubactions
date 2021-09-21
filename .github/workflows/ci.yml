@@ -143,7 +143,8 @@ jobs:
         with:
           postgresql version: '13'
       - run: npm --prefix server ci
-      - run: npm --prefix server run db:reset
+      - run: npm --prefix server run db:create
+      - run: npm --prefix server run db:migrate
       - run: npm --prefix server run test:e2e
 
 
