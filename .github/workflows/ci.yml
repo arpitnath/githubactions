@@ -85,7 +85,6 @@ jobs:
       #   COMPOSE_FILE: ./docker-compose.yaml
 
       steps:
-        - uses: actions/checkout@v2
         # - name: Generate .env 
         #   uses: SpicyPizza/create-envfile@v1
         #   with:
@@ -128,7 +127,6 @@ jobs:
       #   COMPOSE_FILE: ./docker-compose.yaml
 
       steps:
-        - uses: actions/checkout@v2
       #   - name: Generate .env 
       #     uses: SpicyPizza/create-envfile@v1
       #     with:
