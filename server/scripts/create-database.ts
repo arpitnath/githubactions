@@ -52,7 +52,7 @@ function createDatabase(): void {
 }
 
 const nodeEnvPath = path.resolve(process.cwd(), process.env.NODE_ENV === 'test' ? '../.env.test' : '../.env');
-
+console.log('::nodepath::', nodeEnvPath);
 const fallbackPath = path.resolve(process.cwd(), '../.env');
 
 if (fs.existsSync(nodeEnvPath)) {
