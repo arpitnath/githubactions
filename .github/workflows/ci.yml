@@ -46,6 +46,7 @@ jobs:
   create-env:
       runs-on: ubuntu-latest
       steps:
+        - uses: actions/checkout@v2
         - uses: SpicyPizza/create-envfile@v1
           with:
             envkey_TOOLJET_HOST: http://localhost:8082
@@ -73,6 +74,11 @@ jobs:
             envkey_PG_DB: tooljet_test
             envkey_ORM_LOGGING: error
             file_name: .env.test
+          
+        - uses: actions/upload-artifact@v2
+          with:
+            name: env-files
+            path: .
 
 
 
@@ -84,38 +90,14 @@ jobs:
 
 
       steps:
-        # - name: Generate .env 
-        #   uses: SpicyPizza/create-envfile@v1
-        #   with:
-        #     envkey_TOOLJET_HOST: http://localhost:8082
-        #     envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
-        #     envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
-        #     envkey_NODE_ENV: dev
-        #     envkey_PG_HOST: postgres
-        #     envkey_PG_PORT: 5432
-        #     envkey_PG_USER: postgres
-        #     envkey_PG_PASS: postgres
-        #     envkey_PG_DB: tooljet_test
-        #     envkey_ORM_LOGGING: error
-        #     file_name: .env
 
-        # - name: Generate .env.test
-        #   uses: SpicyPizza/create-envfile@v1
-        #   with:
-        #     envkey_TOOLJET_HOST: http://localhost:8082
-        #     envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
-        #     envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
-        #     envkey_NODE_ENV: test
-        #     envkey_PG_HOST: postgres
-        #     envkey_PG_PORT: 5432
-        #     envkey_PG_USER: postgres
-        #     envkey_PG_PASS: postgres
-        #     envkey_PG_DB: tooljet_test
-        #     envkey_ORM_LOGGING: error
-        #     file_name: .env.test
         - uses: actions/checkout@v2
+        - name: Download artifact
+          uses: actions/download-artifact@v2
           with:
-            clean: false
+            name: env-files
+            path: .
+
         - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
         - run: docker-compose run --rm server npm run test 
@@ -126,41 +108,15 @@ jobs:
       needs: create-env
 
       steps:
-      #   - name: Generate .env 
-      #     uses: SpicyPizza/create-envfile@v1
-      #     with:
-      #       envkey_TOOLJET_HOST: http://localhost:8082
-      #       envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
-      #       envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
-      #       envkey_NODE_ENV: dev
-      #       envkey_PG_HOST: postgres
-      #       envkey_PG_PORT: 5432
-      #       envkey_PG_USER: postgres
-      #       envkey_PG_PASS: postgres
-      #       envkey_PG_DB: tooljet_test
-      #       envkey_ORM_LOGGING: error
-      #       file_name: .env
-
-      #   - name: Generate .env.test
-      #     uses: SpicyPizza/create-envfile@v1
-      #     with:
-      #       envkey_TOOLJET_HOST: http://localhost:8082
-      #       envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
-      #       envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
-      #       envkey_NODE_ENV: test
-      #       envkey_PG_HOST: postgres
-      #       envkey_PG_PORT: 5432
-      #       envkey_PG_USER: postgres
-      #       envkey_PG_PASS: postgres
-      #       envkey_PG_DB: tooljet_test
-      #       envkey_ORM_LOGGING: error
-      #       file_name: .env.test
-        - uses: actions/checkout@v2
-          with:
-            clean: false
-        - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: env-files
+          path: .
+      - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
-        - run: docker-compose run --rm server npm run test:e2e 
+      - run: docker-compose run --rm server npm run test:e2e 
 
 
 
