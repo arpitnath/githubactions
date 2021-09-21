@@ -51,7 +51,6 @@ jobs:
   test: 
 
       runs-on: ubuntu-latest
-      needs: create-env-files
       env:
         COMPOSE_FILE: ./docker-compose.yaml
 
