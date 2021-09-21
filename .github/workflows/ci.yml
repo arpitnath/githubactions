@@ -114,7 +114,7 @@ jobs:
 
         - run: docker-compose up -d
 
-        - run:  docker-compose run --rm -e NODE_ENV=test server npm run db:create
+        # - run:  docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
         - run: docker-compose run --rm server npm run test 
 
