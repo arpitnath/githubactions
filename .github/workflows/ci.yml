@@ -7,26 +7,29 @@ on:
     branches: [ develop ]
 
 jobs:
-  # build:
+  build:
 
-  #   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #     with:
-  #       clean: false
-  #   - name: Read node and npm versions from package.json
-  #     uses: skjnldsv/read-package-engines-version-actions@v1
-  #     with:
-  #       fallbackNode: '14.17.3'
-  #       fallbackNpm: '7.20.0'
-  #     id: package-engines-versions
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        clean: false
+    - name: Read node and npm versions from package.json
+      uses: skjnldsv/read-package-engines-version-actions@v1
+      with:
+        fallbackNode: '14.17.3'
+        fallbackNpm: '7.20.0'
+      id: package-engines-versions
     
-  #   - name: Show node and npm version numbers
-  #     run: echo "Node version is ${{steps.package-engines-versions.outputs.nodeVersion}} & NPM version is ${{steps.package-engines-versions.outputs.npmVersion}}"
+    - name: Show node and npm version numbers
+      run: echo "Node version is ${{steps.package-engines-versions.outputs.nodeVersion}} & NPM version is ${{steps.package-engines-versions.outputs.npmVersion}}"
     
-  #   - run: npm ci
-  #   - run: npm run build
+    - run: npm ci
+    - uses: harmon758/postgresql-action@v1
+      with:
+          postgresql version: '13'
+    - run: npm run build
 
 
   # lint:
@@ -115,9 +118,9 @@ jobs:
         # - run:  docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
         # - run: docker-compose run --rm server npm run test 
-        - uses: harmon758/postgresql-action@v1
-          with:
-            postgresql version: '13'
+        # - uses: harmon758/postgresql-action@v1
+        #   with:
+        #     postgresql version: '13'
         - run: npm --prefix server ci
         - run: npm --prefix server run test
 
@@ -138,16 +141,14 @@ jobs:
         with:
           path: .env.test
 
-      - uses: harmon758/postgresql-action@v1
-        with:
-          postgresql version: '13'
+      # - uses: harmon758/postgresql-action@v1
+      #   with:
+      #     postgresql version: '13'
       - run: npm ci
-      - run: npm --prefix server ci
-      - run: docker-compose run -e NODE_ENV=test server npm run db:create
-      - run: docker-compose run server npm run test:e2e
+      # - run: npm --prefix server ci
       # - run: npm run -e NODE_ENV=test --prefix server db:create
       # - run: npm run -e NODE_ENV=test --prefix server db:migrate
-      # - run: npm run --prefix server test:e2e
+      - run: npm run --prefix server test:e2e
 
 
 
