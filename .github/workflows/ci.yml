@@ -232,7 +232,9 @@ jobs:
         - run: npm --prefix server ci
         # - run: npm run --prefix server db:reset
         # - run: npm --prefix server run start
-        - run: npm --prefix server run test
+        # - run: npm --prefix server run test
+        - run: docker compose build
+        - run: docker-compose run --rm server npm run test
 
   e2e-test: 
 
@@ -271,11 +273,13 @@ jobs:
             echo PG_DB: tooljet_test >> .env
             echo ORM_LOGGING: error >> .env
             cat .env
-      - uses: harmon758/postgresql-action@v1
-        with:
-            postgresql version: '13'
-      - run: npm --prefix server ci
-      - run: npm --prefix server run test:e2e
+      # - uses: harmon758/postgresql-action@v1
+      #   with:
+      #       postgresql version: '13'
+      # - run: npm --prefix server ci
+      # - run: npm --prefix server run test:e2e
+      - run: docker compose build
+      - run: docker-compose run --rm server npm run test:e2e
       # - name: Download artifact
       #   uses: actions/download-artifact@v2
       #   with:
