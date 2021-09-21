@@ -7,143 +7,99 @@ on:
     branches: [ develop ]
 
 jobs:
-  build:
+  # build:
 
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        clean: false
-    - name: Read node and npm versions from package.json
-      uses: skjnldsv/read-package-engines-version-actions@v1
-      with:
-        fallbackNode: '14.17.3'
-        fallbackNpm: '7.20.0'
-      id: package-engines-versions
-    
-    - name: Show node and npm version numbers
-      run: echo "Node version is ${{steps.package-engines-versions.outputs.nodeVersion}} & NPM version is ${{steps.package-engines-versions.outputs.npmVersion}}"
-    
-    - run: npm ci
-    - uses: harmon758/postgresql-action@v1
-      with:
-          postgresql version: '13'
-    - run: npm run build
-
-
-  # lint:
   #   runs-on: ubuntu-latest
-  #   needs: build
 
   #   steps:
   #   - uses: actions/checkout@v2
+  #     with:
+  #       clean: false
   #   - name: Read node and npm versions from package.json
   #     uses: skjnldsv/read-package-engines-version-actions@v1
   #     with:
   #       fallbackNode: '14.17.3'
   #       fallbackNpm: '7.20.0'
   #     id: package-engines-versions
+    
+  #   - name: Show node and npm version numbers
+  #     run: echo "Node version is ${{steps.package-engines-versions.outputs.nodeVersion}} & NPM version is ${{steps.package-engines-versions.outputs.npmVersion}}"
+    
   #   - run: npm ci
-  #   - run: npm --prefix frontend ci && npm --prefix server ci
-  #   - name: Lint
-  #     run: npm --prefix server run lint && npm --prefix frontend run lint
-  create-env:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-          with:
-            clean: false
-        - name: Make .env
-          uses: SpicyPizza/create-envfile@v1
-          with:
-            envkey_TOOLJET_HOST: http://localhost:8082
-            envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
-            envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
-            envkey_NODE_ENV: dev
-            envkey_PG_HOST: postgres
-            envkey_PG_PORT: 5432
-            envkey_PG_USER: postgres
-            envkey_PG_PASS: postgres
-            envkey_PG_DB: tooljet_test
-            envkey_ORM_LOGGING: error
-            file_name: .env
+  #   - uses: harmon758/postgresql-action@v1
+  #     with:
+  #         postgresql version: '13'
+  #   - run: npm run build
 
-        - name: Make .env.test
-          uses: SpicyPizza/create-envfile@v1
-          with:
-            envkey_TOOLJET_HOST: http://localhost:8082
-            envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
-            envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
-            envkey_NODE_ENV: test
-            envkey_PG_HOST: postgres
-            envkey_PG_PORT: 5432
-            envkey_PG_USER: postgres
-            envkey_PG_PASS: postgres
-            envkey_PG_DB: tooljet_test
-            envkey_ORM_LOGGING: error
-            file_name: .env.test
+
+  # # lint:
+  # #   runs-on: ubuntu-latest
+  # #   needs: build
+
+  # #   steps:
+  # #   - uses: actions/checkout@v2
+  # #   - name: Read node and npm versions from package.json
+  # #     uses: skjnldsv/read-package-engines-version-actions@v1
+  # #     with:
+  # #       fallbackNode: '14.17.3'
+  # #       fallbackNpm: '7.20.0'
+  # #     id: package-engines-versions
+  # #   - run: npm ci
+  # #   - run: npm --prefix frontend ci && npm --prefix server ci
+  # #   - name: Lint
+  # #     run: npm --prefix server run lint && npm --prefix frontend run lint
+  # create-env:
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #       - uses: actions/checkout@v2
+  #         with:
+  #           clean: false
+  #       - name: Make .env
+  #         uses: SpicyPizza/create-envfile@v1
+  #         with:
+  #           envkey_TOOLJET_HOST: http://localhost:8082
+  #           envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
+  #           envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
+  #           envkey_NODE_ENV: dev
+  #           envkey_PG_HOST: postgres
+  #           envkey_PG_PORT: 5432
+  #           envkey_PG_USER: postgres
+  #           envkey_PG_PASS: postgres
+  #           envkey_PG_DB: tooljet_test
+  #           envkey_ORM_LOGGING: error
+  #           file_name: .env
+
+  #       - name: Make .env.test
+  #         uses: SpicyPizza/create-envfile@v1
+  #         with:
+  #           envkey_TOOLJET_HOST: http://localhost:8082
+  #           envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
+  #           envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
+  #           envkey_NODE_ENV: test
+  #           envkey_PG_HOST: postgres
+  #           envkey_PG_PORT: 5432
+  #           envkey_PG_USER: postgres
+  #           envkey_PG_PASS: postgres
+  #           envkey_PG_DB: tooljet_test
+  #           envkey_ORM_LOGGING: error
+  #           file_name: .env.test
           
-        - uses: actions/upload-artifact@v2
-          with:
-            name: env-files
-            path: .env
-        - uses: actions/upload-artifact@v2
-          with:
-            name: env-files
-            path: .env.test
+  #       - uses: actions/upload-artifact@v2
+  #         with:
+  #           name: env-files
+  #           path: .env
+  #       - uses: actions/upload-artifact@v2
+  #         with:
+  #           name: env-files
+  #           path: .env.test
 
+  setup: 
+    runs-on: ubuntu-latest
 
-
-
-  unit-test: 
-
-      runs-on: ubuntu-latest
-      needs: [create-env, build]
-      steps:
-        - uses: actions/checkout@v2
-        - name: Download artifact
-          uses: actions/download-artifact@v2
-          with:
-            name: env-files
-            path: .env
-        - name: Download artifact
-          uses: actions/download-artifact@v2
-          with:
-            name: env-files
-            path: .env.test
-
-        # - run: docker-compose up -d
-
-        # - run:  docker-compose run --rm -e NODE_ENV=test server npm run db:create
-        # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
-        # - run: docker-compose run --rm server npm run test 
-        # - uses: harmon758/postgresql-action@v1
-        #   with:
-        #     postgresql version: '13'
-        - run: npm --prefix server ci
-        - run: npm --prefix server run test
-
-  e2e-test: 
-
-      runs-on: ubuntu-latest
-      # needs: [create-env]
-      
-      steps:
+    steps:
       - uses: actions/checkout@v2
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: env-files
-      #     path: .env
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     path: .env.test
-
-      # - uses: harmon758/postgresql-action@v1
-      #   with:
-      #     postgresql version: '13'
+        with:
+          clean: false
       - name: Make .env
         uses: SpicyPizza/create-envfile@v1
         with:
@@ -173,10 +129,92 @@ jobs:
             envkey_PG_DB: tooljet_test
             envkey_ORM_LOGGING: error
             file_name: .env.test
-      - name: Display structure of downloaded files
-        run: ls -R
-      # - run: npm ci
       - run:  docker-compose run --rm -e NODE_ENV=test server npm run db:create
+
+
+
+  unit-test: 
+
+      runs-on: ubuntu-latest
+      needs: setup
+      steps:
+        - uses: actions/checkout@v2
+        - name: Download artifact
+          uses: actions/download-artifact@v2
+          with:
+            name: env-files
+            path: .env
+        - name: Download artifact
+          uses: actions/download-artifact@v2
+          with:
+            name: env-files
+            path: .env.test
+
+        # - run: docker-compose up -d
+
+        # - run:  docker-compose run --rm -e NODE_ENV=test server npm run db:create
+        # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
+        - run: docker-compose run --rm server npm run test 
+        # - uses: harmon758/postgresql-action@v1
+        #   with:
+        #     postgresql version: '13'
+        # - run: npm --prefix server ci
+        # - run: npm --prefix server run test
+
+  e2e-test: 
+
+      runs-on: ubuntu-latest
+      needs: setup
+      
+      steps:
+      - uses: actions/checkout@v2
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: env-files
+      #     path: .env
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     path: .env.test
+
+      # - uses: harmon758/postgresql-action@v1
+      #   with:
+      #     postgresql version: '13'
+      # - name: Make .env
+      #   uses: SpicyPizza/create-envfile@v1
+      #   with:
+      #       envkey_TOOLJET_HOST: http://localhost:8082
+      #       envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
+      #       envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
+      #       envkey_NODE_ENV: dev
+      #       envkey_PG_HOST: postgres
+      #       envkey_PG_PORT: 5432
+      #       envkey_PG_USER: postgres
+      #       envkey_PG_PASS: postgres
+      #       envkey_PG_DB: tooljet_test
+      #       envkey_ORM_LOGGING: error
+      #       file_name: .env
+
+      # - name: Make .env.test
+      #   uses: SpicyPizza/create-envfile@v1
+      #   with:
+      #       envkey_TOOLJET_HOST: http://localhost:8082
+      #       envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
+      #       envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
+      #       envkey_NODE_ENV: test
+      #       envkey_PG_HOST: postgres
+      #       envkey_PG_PORT: 5432
+      #       envkey_PG_USER: postgres
+      #       envkey_PG_PASS: postgres
+      #       envkey_PG_DB: tooljet_test
+      #       envkey_ORM_LOGGING: error
+      #       file_name: .env.test
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      # # - run: npm ci
+      # - run:  docker-compose run --rm -e NODE_ENV=test server npm run db:create
+      - run: docker-compose run --rm server npm run test:e2e
       # - run: npm --prefix server ci
       # - run: npm run --prefix server db:create
       # - run: npm run --prefix server db:migrate
