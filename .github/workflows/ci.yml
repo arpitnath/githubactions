@@ -43,21 +43,13 @@ jobs:
   #   - run: npm --prefix frontend ci && npm --prefix server ci
   #   - name: Lint
   #     run: npm --prefix server run lint && npm --prefix frontend run lint
-
-
-
-
-
-  unit-test: 
-
+  create-env:
       runs-on: ubuntu-latest
-      env:
-        COMPOSE_FILE: ./docker-compose.yaml
-
       steps:
         - uses: actions/checkout@v2
-
-        - name: Make .env
+          with:
+            clean: false
+        - name: Generate .env 
           uses: SpicyPizza/create-envfile@v1
           with:
             envkey_TOOLJET_HOST: http://localhost:8082
@@ -72,7 +64,92 @@ jobs:
             envkey_ORM_LOGGING: error
             file_name: .env
 
-        - name: Make .env.test
+        - name: Generate .env.test
+          uses: SpicyPizza/create-envfile@v1
+          with:
+            envkey_TOOLJET_HOST: http://localhost:8082
+            envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
+            envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
+            envkey_NODE_ENV: test
+            envkey_PG_HOST: postgres
+            envkey_PG_PORT: 5432
+            envkey_PG_USER: postgres
+            envkey_PG_PASS: postgres
+            envkey_PG_DB: tooljet_test
+            envkey_ORM_LOGGING: error
+            file_name: .env.test
+
+
+
+
+  unit-test: 
+
+      runs-on: ubuntu-latest
+      needs: create-env
+      env:
+        COMPOSE_FILE: ./docker-compose.yaml
+
+      steps:
+        # - uses: actions/checkout@v2
+        # - name: Generate .env 
+        #   uses: SpicyPizza/create-envfile@v1
+        #   with:
+        #     envkey_TOOLJET_HOST: http://localhost:8082
+        #     envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
+        #     envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
+        #     envkey_NODE_ENV: dev
+        #     envkey_PG_HOST: postgres
+        #     envkey_PG_PORT: 5432
+        #     envkey_PG_USER: postgres
+        #     envkey_PG_PASS: postgres
+        #     envkey_PG_DB: tooljet_test
+        #     envkey_ORM_LOGGING: error
+        #     file_name: .env
+
+        # - name: Generate .env.test
+        #   uses: SpicyPizza/create-envfile@v1
+        #   with:
+        #     envkey_TOOLJET_HOST: http://localhost:8082
+        #     envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
+        #     envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
+        #     envkey_NODE_ENV: test
+        #     envkey_PG_HOST: postgres
+        #     envkey_PG_PORT: 5432
+        #     envkey_PG_USER: postgres
+        #     envkey_PG_PASS: postgres
+        #     envkey_PG_DB: tooljet_test
+        #     envkey_ORM_LOGGING: error
+        #     file_name: .env.test
+
+        - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
+        # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
+        - run: docker-compose run --rm server npm run test 
+
+  e2e-test: 
+
+      runs-on: ubuntu-latest
+      needs: create-env
+      env:
+        COMPOSE_FILE: ./docker-compose.yaml
+
+      steps:
+        - uses: actions/checkout@v2
+        - name: Generate .env 
+          uses: SpicyPizza/create-envfile@v1
+          with:
+            envkey_TOOLJET_HOST: http://localhost:8082
+            envkey_LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40
+            envkey_SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb
+            envkey_NODE_ENV: dev
+            envkey_PG_HOST: postgres
+            envkey_PG_PORT: 5432
+            envkey_PG_USER: postgres
+            envkey_PG_PASS: postgres
+            envkey_PG_DB: tooljet_test
+            envkey_ORM_LOGGING: error
+            file_name: .env
+
+        - name: Generate .env.test
           uses: SpicyPizza/create-envfile@v1
           with:
             envkey_TOOLJET_HOST: http://localhost:8082
@@ -89,8 +166,8 @@ jobs:
 
         - run: docker-compose run --rm -e NODE_ENV=test server npm run db:create
         # - run: docker-compose run --rm -e NODE_ENV=test server npm run db:migrate
-        - name: Run unit tests
-          run: docker-compose run --rm server npm run test 
+        - run: docker-compose run --rm server npm run test:e2e 
+
 
 
 
