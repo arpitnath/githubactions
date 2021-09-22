@@ -91,7 +91,7 @@ jobs:
             echo PG_DB: tooljet_test >> .env
             echo ORM_LOGGING: error >> .env
             cat .env
-        - run: npm --prefix ci
+        - run: npm ci
         # - run: npm --prefix server ci && npm --prefix frontend ci
         - run: npm --prefix frontend ci && NODE_ENV=test npm --prefix frontend run build && npm --prefix server ci && NODE_ENV=test npm --prefix server run build
         - run: npm --prefix server run test
