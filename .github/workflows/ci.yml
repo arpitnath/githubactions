@@ -50,8 +50,16 @@ jobs:
             echo ORM_LOGGING: error >> .env
             cat .env
 
-        - run: docker-compose build
-        - run: docker-compose run server npm run test
+        # - run: docker-compose build
+        # - run: docker-compose run server npm run test
+        - name: Check out code
+          uses: actions/checkout@v2
+        - name: Build docker images
+          run: docker-compose build
+        - name: Setup database
+          run: docker-compose run setup
+        - name: Run tests
+          run: docker-compose run test
         # - run: npm ci
         # # - run: npm --prefix server ci && npm --prefix frontend ci
         # - run: npm --prefix frontend ci && NODE_ENV=test npm --prefix frontend run build && npm --prefix server ci && NODE_ENV=test npm --prefix server run build
