@@ -27,22 +27,22 @@ jobs:
     - run: npm run build
 
 
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   needs: build
+  lint:
+    runs-on: ubuntu-latest
+    needs: build
 
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Read node and npm versions from package.json
-  #     uses: skjnldsv/read-package-engines-version-actions@v1
-  #     with:
-  #       fallbackNode: '14.17.3'
-  #       fallbackNpm: '7.20.0'
-  #     id: package-engines-versions
-  #   - run: npm ci
-  #   - run: npm --prefix frontend ci && npm --prefix server ci
-  #   - name: Lint
-  #     run: npm --prefix server run lint && npm --prefix frontend run lint
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use node and npm versions from package.json
+      uses: skjnldsv/read-package-engines-version-actions@v1
+      with:
+        fallbackNode: '14.17.3'
+        fallbackNpm: '7.20.0'
+      id: package-engines-versions
+    - run: npm ci
+    - run: npm --prefix frontend ci && npm --prefix server ci
+    - name: Lint
+      run: npm --prefix server run lint && npm --prefix frontend run lint
 
 
 
