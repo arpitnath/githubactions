@@ -24,40 +24,40 @@ jobs:
     #       clean: false
 
 
-    build:
-      runs-on: ubuntu-latest
-      # needs: container-job
-      container: node:10.18-jessie
+    # build:
+    #   runs-on: ubuntu-latest
+    #   # needs: container-job
 
-      services:
-      # Label used to access the service container
-        postgres:
-        # Docker Hub image
-          image: postgres
-
-      steps:
-      - uses: actions/checkout@v2
-        with:
-          clean: false
-      - name: Read node and npm versions from package.json
-        uses: skjnldsv/read-package-engines-version-actions@v1
-        with:
-          fallbackNode: '14.17.3'
-          fallbackNpm: '7.20.0'
-        id: package-engines-versions
+    #   steps:
+    #   - uses: actions/checkout@v2
+    #     with:
+    #       clean: false
+    #   - name: Read node and npm versions from package.json
+    #     uses: skjnldsv/read-package-engines-version-actions@v1
+    #     with:
+    #       fallbackNode: '14.17.3'
+    #       fallbackNpm: '7.20.0'
+    #     id: package-engines-versions
       
-      - name: Show node and npm version numbers
-        run: echo "Node version is ${{steps.package-engines-versions.outputs.nodeVersion}} & NPM version is ${{steps.package-engines-versions.outputs.npmVersion}}"
+    #   - name: Show node and npm version numbers
+    #     run: echo "Node version is ${{steps.package-engines-versions.outputs.nodeVersion}} & NPM version is ${{steps.package-engines-versions.outputs.npmVersion}}"
       
-      - run: npm ci
-      - run: npm run build
+    #   - run: npm ci
+    #   - run: npm run build
 
 
 
 
     unit-test: 
       runs-on: ubuntu-latest
-      needs: build
+      # needs: build
+
+      container: node:10.18-jessie
+      services:
+      # Label used to access the service container
+        postgres:
+        # Docker Hub image
+          image: postgres
       steps:
         - uses: actions/checkout@v2
           with:
@@ -91,6 +91,7 @@ jobs:
             echo PG_DB: tooljet_test >> .env
             echo ORM_LOGGING: error >> .env
             cat .env
-
-        - run: npm --prefix server ci
+        - run: npm --prefix ci
+        # - run: npm --prefix server ci && npm --prefix frontend ci
+        - run: npm --prefix frontend ci && NODE_ENV=test npm --prefix frontend run build && npm --prefix server ci && NODE_ENV=test npm --prefix server run build
         - run: npm --prefix server run test
