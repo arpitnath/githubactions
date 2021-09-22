@@ -52,4 +52,5 @@ jobs:
 
 
         - run: npm ci
+        - run: npm --prefix server ci
         - run: npm --prefix server run test
