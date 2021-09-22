@@ -8,59 +8,59 @@ on:
 
 jobs:
  
-  unit-test: 
+  # unit-test: 
 
-      runs-on: ubuntu-latest
-      # env:
-      #     TOOLJET_HOST: ${{secrets.TOOLJET_HOST}}
-      #     LOCKBOX_MASTER_KEY: ${{secrets.LOCKBOX_MASTER_KEY}}
-      #     SECRET_KEY_BASE: ${{secrets.SECRET_KEY_BASE}}
-      #     NODE_ENV: ${{secrets.NODE_ENV}}
-      #     PG_HOST: 5432
-      #     PG_PORT: ${{secrets.PG_PORT}}
-      #     PG_USER: ${{secrets.PG_USER}}
-      #     PG_PASS: ${{secrets.PG_PASS}}
-      #     PG_DB: ${{secrets.PG_DB}}
-      steps:
-        - uses: actions/checkout@v2
-        - name: Create .env.test file
-          run: |
-              touch .env.test
-              echo TOOLJET_HOST: http://localhost:8082 >> .env.test
-              echo LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40 >> .env.test
-              echo SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb >> .env.test
-              echo NODE_ENV: test >> .env.test
-              echo PG_HOST: postgres >> .env.test
-              echo PG_PORT: 5432 >> .env.test
-              echo PG_USER: pguser >> .env.test
-              echo PG_PASS: postgres >> .env.test
-              echo PG_DB: tooljet_test >> .env.test
-              echo ORM_LOGGING: error >> .env.test
-              cat .env.test
+  #     runs-on: ubuntu-latest
+  #     # env:
+  #     #     TOOLJET_HOST: ${{secrets.TOOLJET_HOST}}
+  #     #     LOCKBOX_MASTER_KEY: ${{secrets.LOCKBOX_MASTER_KEY}}
+  #     #     SECRET_KEY_BASE: ${{secrets.SECRET_KEY_BASE}}
+  #     #     NODE_ENV: ${{secrets.NODE_ENV}}
+  #     #     PG_HOST: 5432
+  #     #     PG_PORT: ${{secrets.PG_PORT}}
+  #     #     PG_USER: ${{secrets.PG_USER}}
+  #     #     PG_PASS: ${{secrets.PG_PASS}}
+  #     #     PG_DB: ${{secrets.PG_DB}}
+  #     steps:
+  #       - uses: actions/checkout@v2
+  #       - name: Create .env.test file
+  #         run: |
+  #             touch .env.test
+  #             echo TOOLJET_HOST: http://localhost:8082 >> .env.test
+  #             echo LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40 >> .env.test
+  #             echo SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb >> .env.test
+  #             echo NODE_ENV: test >> .env.test
+  #             echo PG_HOST: postgres >> .env.test
+  #             echo PG_PORT: 5432 >> .env.test
+  #             echo PG_USER: pguser >> .env.test
+  #             echo PG_PASS: postgres >> .env.test
+  #             echo PG_DB: tooljet_test >> .env.test
+  #             echo ORM_LOGGING: error >> .env.test
+  #             cat .env.test
 
-        - name: Create .env file
-          run: |
-                touch .env
-                echo TOOLJET_HOST: http://localhost:8082 >> .env
-                echo LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40 >> .env
-                echo SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb >> .env
-                echo NODE_ENV: dev >> .env
-                echo PG_HOST: postgres >> .env
-                echo PG_PORT: 5432 >> .env
-                echo PG_USER: pguser >> .env
-                echo PG_PASS: postgres >> .env
-                echo PG_DB: tooljet_test >> .env
-                echo ORM_LOGGING: error >> .env
-                cat .env
+  #       - name: Create .env file
+  #         run: |
+  #               touch .env
+  #               echo TOOLJET_HOST: http://localhost:8082 >> .env
+  #               echo LOCKBOX_MASTER_KEY: 13c9b8364ae71f714774c82498ba328813069e48d80029bb29f49d0ada5a8e40 >> .env
+  #               echo SECRET_KEY_BASE: ea85064ed42ad02cfc022e66d8bccf452e3fa1142421cbd7a13592d91a2cbb866d6001060b73a98a65be57e65524357d445efae00a218461088a706decd62dcb >> .env
+  #               echo NODE_ENV: dev >> .env
+  #               echo PG_HOST: postgres >> .env
+  #               echo PG_PORT: 5432 >> .env
+  #               echo PG_USER: pguser >> .env
+  #               echo PG_PASS: postgres >> .env
+  #               echo PG_DB: tooljet_test >> .env
+  #               echo ORM_LOGGING: error >> .env
+  #               cat .env
 
-        - run: printenv
-        - uses: harmon758/postgresql-action@v1
-          with:
-            postgresql version: '13'
-        - run: npm --prefix server ci
-        - run: npm run --prefix server db:create
-        - run: npm run --prefix server db:migrate
-        - run: npm --prefix server run test
+  #       - run: printenv
+  #       - uses: harmon758/postgresql-action@v1
+  #         with:
+  #           postgresql version: '13'
+  #       - run: npm --prefix server ci
+  #       - run: npm run --prefix server db:create
+  #       - run: npm run --prefix server db:migrate
+  #       - run: npm --prefix server run test
 
   e2e-test: 
 
