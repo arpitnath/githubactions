@@ -83,7 +83,7 @@ jobs:
             echo NODE_ENV: dev >> .env
             echo PG_HOST: localhost >> .env
             echo PG_PORT: 5432 >> .env
-            echo PG_USER: postgres >> .env
+            echo "PG_USER": postgres >> .env
             echo PG_PASS: postgres >> .env
             echo PG_DB: tooljet_test >> .env
             echo ORM_LOGGING: error >> .env
