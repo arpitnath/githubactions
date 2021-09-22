@@ -74,7 +74,7 @@ jobs:
           PG_PORT: 5432 
           PG_USER: postgres 
           PG_PASS: postgres 
-          PG_DB: jet_test 
+          PG_DB: tooljet_test 
       
       steps:
       - uses: actions/checkout@v2
