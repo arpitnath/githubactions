@@ -72,18 +72,35 @@ jobs:
           NODE_ENV: test 
           # PG_HOST:  localhost 
           # PG_PORT: 5432 
-          PG_USER: postgres 
-          PG_PASS: postgres 
+          # PG_USER: postgres 
+          # PG_PASS: postgres 
           PG_DB: tooljet_test 
+
+      container: node:10.18-jessie
+
+    # Service containers to run with `container-job`
+      services:
+      # Label used to access the service container
+        postgres:
+        # Docker Hub image
+          image: postgres
+        # Provide the password for postgres
+          env:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_HOST: postgres
+            POSTGRES_PORT: 5432
+
       
       steps:
       - uses: actions/checkout@v2
 
 
       - run: printenv
-      - uses: harmon758/postgresql-action@v1
-        with:
-          postgresql version: '13'
+      # - uses: harmon758/postgresql-action@v1
+      #   with:
+      #     postgresql version: '13'
+      
       - run: npm ci
       - run: npm --prefix server ci
       - run: npm run --prefix server db:create
