@@ -121,7 +121,6 @@ jobs:
             postgresql version: '13'
         - run: npm ci
         - run: npm --prefix server ci
-        - run: npm --prefix start
         - run: npm run --prefix server db:create
         - run: npm run --prefix server db:migrate
         - run: npm --prefix server run test
