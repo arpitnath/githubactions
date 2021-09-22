@@ -11,16 +11,16 @@ jobs:
   unit-test: 
 
       runs-on: ubuntu-latest
-      env:
-          TOOLJET_HOST: ${{secrets.TOOLJET_HOST}}
-          LOCKBOX_MASTER_KEY: ${{secrets.LOCKBOX_MASTER_KEY}}
-          SECRET_KEY_BASE: ${{secrets.SECRET_KEY_BASE}}
-          NODE_ENV: ${{secrets.NODE_ENV}}
-          PG_HOST: 5432
-          PG_PORT: ${{secrets.PG_PORT}}
-          PG_USER: ${{secrets.PG_USER}}
-          PG_PASS: ${{secrets.PG_PASS}}
-          PG_DB: ${{secrets.PG_DB}}
+      # env:
+      #     TOOLJET_HOST: ${{secrets.TOOLJET_HOST}}
+      #     LOCKBOX_MASTER_KEY: ${{secrets.LOCKBOX_MASTER_KEY}}
+      #     SECRET_KEY_BASE: ${{secrets.SECRET_KEY_BASE}}
+      #     NODE_ENV: ${{secrets.NODE_ENV}}
+      #     PG_HOST: 5432
+      #     PG_PORT: ${{secrets.PG_PORT}}
+      #     PG_USER: ${{secrets.PG_USER}}
+      #     PG_PASS: ${{secrets.PG_PASS}}
+      #     PG_DB: ${{secrets.PG_DB}}
       steps:
         - uses: actions/checkout@v2
         - uses: harmon758/postgresql-action@v1
