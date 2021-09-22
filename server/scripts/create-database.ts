@@ -17,6 +17,8 @@ function createDatabaseFromFile(envPath: string): void {
 function createDatabase(): void {
   const { value: envVars, error } = buildAndValidateDatabaseConfig();
 
+  console.log('test:::::', { envVars });
+
   if (error) {
     throw new Error(`Config validation error: ${error.message}`);
   }
